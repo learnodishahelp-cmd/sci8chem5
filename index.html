@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Video & Transcription</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+        }
+
+        .mobile-frame {
+            max-width: 480px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            box-shadow: 0 30px 50px rgba(70, 20, 90, 0.2);
+            padding: 18px 14px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            border: 1px solid rgba(150, 80, 180, 0.4);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #4a148c;
+            background: rgba(225, 190, 231, 0.8);
+            padding: 6px 18px;
+            border-radius: 40px;
+        }
+
+        .page-indicator {
+            background: #f3e5f5;
+            border-radius: 30px;
+            padding: 6px 16px;
+            font-weight: 600;
+            color: #4a148c;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: #fffffffa;
+            border-radius: 32px;
+            padding: 16px;
+            box-shadow: 0 12px 28px rgba(50, 20, 70, 0.1);
+            border: 1px solid #ce93d8;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .page {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 20px;
+        }
+
+        .transcript-box {
+            background: #f5f0ff;
+            border-radius: 20px;
+            padding: 14px;
+            border: 1px solid #d1c4e9;
+            color: #2d1b3d;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .transcript-box h3 {
+            font-size: 1rem;
+            margin-bottom: 6px;
+            color: #4a148c;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #8e24aa, #4a148c);
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 12px 18px;
+            border-radius: 32px;
+            font-size: 1rem;
+            cursor: pointer;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(74, 20, 140, 0.3);
+            transition: 0.2s;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.96);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+            background: #888;
+            box-shadow: none;
+        }
+
+        .notice {
+            font-size: 0.8rem;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="mobile-frame">
+    <div class="header">
+        <h1>📽️ Video & Transcript</h1>
+        <div class="page-indicator" id="pageTitle">Page 1 / 2</div>
+    </div>
+
+    <div class="card">
+        <!-- PAGE 1: Long video + transcript -->
+        <div id="page1" class="page active">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/86tLx_cKlMM" 
+                        title="YouTube video player" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <div class="transcript-box">
+                <h3>📝 Please Practise with your friends.</h3>
+                <div id="transcriptText">
+                    <br>
+                     <b></b>.<br>
+                    These video discusses topics related to cell biology, organelles, or other science concepts. 
+                    
+                </div>
+                <p class="notice"></p>
+            </div>
+        </div>
+
+        <!-- PAGE 2: Shorts video -->
+        <div id="page2" class="page">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/ahz2BuXZyUc" 
+                        title="YouTube Shorts video player" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <div style="text-align:center; padding:10px; background:#f5f0ff; border-radius:20px;">
+                🔹 YouTube Shorts Video
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation between pages -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" disabled>◀ Previous</button>
+        <button class="nav-btn" id="nextBtn">Next ▶</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageTitle = document.getElementById('pageTitle');
+
+        let currentPage = 1;
+
+        function showPage(pageNumber) {
+            if (pageNumber === 1) {
+                page1.classList.add('active');
+                page2.classList.remove('active');
+                pageTitle.textContent = 'Page 1 / 2';
+                prevBtn.disabled = true;
+                nextBtn.disabled = false;
+            } else {
+                page2.classList.add('active');
+                page1.classList.remove('active');
+                pageTitle.textContent = 'Page 2 / 2';
+                prevBtn.disabled = false;
+                nextBtn.disabled = true;
+            }
+            currentPage = pageNumber;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentPage === 2) showPage(1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage === 1) showPage(2);
+        });
+
+        // Optional: if you want to load the actual transcript dynamically,
+        // you could fetch it from a server. For now, placeholder is static.
+    })();
+</script>
+</body>
+</html>
